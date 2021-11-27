@@ -2,8 +2,8 @@
 Api (nguyên gốc: https://static.pipezero.com/covid/data.json) + Giao diện (có thay đổi nhẹ) tìm thấy tại: https://covid19.gov.vn/ <br><br>
 ![api](https://github.com/doanminhquang/api_covid-19_vn/blob/main/api.png?raw=true)
 <b>Lưu ý:</b><br>
-&ensp;Các thông số đặt hidden ở giao diện gốc tức là không còn được update => sai<br>
-&ensp;Thông số của Việt Nam được cập nhật vào khoảng 18:00 theo dữ liệu tính từ 16h hôm trước tới 16h hôm sau của mỗi ngày<br>
+&ensp;Các thông số đặt hidden ở giao diện gốc tức là không còn được update, hoặc update không đủ => sai<br>
+&ensp;Thông số của Việt Nam được cập nhật vào khoảng 18:00 - 18:01 theo dữ liệu tính từ 16h hôm trước tới 16h hôm sau của mỗi ngày<br>
 &ensp;Chưa thử biểu đồ (dữ liệu từ api có '.overview') <br>
 <b>Cấu trúc json:</b><br>
 &ensp;<b>json = {total: {…}, today: {…}, overview: Array(7), locations: Array(63)}</b><br>
