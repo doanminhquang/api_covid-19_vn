@@ -160,22 +160,26 @@
                     // render
                     var textdata = "";
                     for (var i in locations) {
+					  var locations_data = new Object();
+					  locations_data.name = locations[i].name ? locations[i].name : "";
+					  locations_data.cases = locations[i].cases ? numberWithCommas(locations[i].cases) : "0";
+					  locations_data.casesToday = locations[i].casesToday ? '+'+numberWithCommas(locations[i].casesToday) : "-";
+					  locations_data.death = locations[i].death ? numberWithCommas(locations[i].cases) : "0";
                       textdata +=
                       '<div class="row"><span class="city">' +
-                      locations[i].name +
+                      locations_data.name +
                       '</span><span class="total">' +
-                      numberWithCommas(locations[i].cases) +
-                      '</span><span class="daynow red">+' +
-                      numberWithCommas(locations[i].casesToday) +
+                      locations_data.cases  +
+                      '</span><span class="daynow red">' +
+                      locations_data.casesToday +
                       '</span><span class="die">' +
-                      numberWithCommas(locations[i].death) +
+                      locations_data.death +
                       "</span></div>";
                       document.getElementById("data_locations").innerHTML = textdata;
                     }
                   })
 .catch((err) => console.log(err));
 </script>
-
 <script type="text/javascript">
   var data_table = document.getElementById('data_locations');
   function ShowMore(){
@@ -183,7 +187,6 @@
     document.getElementById('xt').classList.add('hidden');
     document.getElementById('rg').classList.remove('hidden');    
   }
-
   function Hidden(){
     data_table.classList.remove('all');
     document.getElementById('xt').classList.remove('hidden');
