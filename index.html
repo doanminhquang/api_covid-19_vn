@@ -4,7 +4,12 @@
  <meta name="viewport" content="width=device-width,initial-scale=1" />
  <link rel="stylesheet" href="covid19.gov.vn.css" />
 </head>
-<body>
+<body>  
+  <div class="home__statistical-nav">
+    <ul style="justify-content: flex-end;">
+      <li><a href="javascript:fetch_data();" style="margin-right: 0">Làm mới dữ liệu</a></li>     
+    </ul>
+  </div>
   <div class="home__statistical-nav">
     <ul style="justify-content: flex-start;">
       <li><a class="active" style='border: none'>Lưu ý: Dữ liệu cập nhập vào khoảng 18H hàng ngày</a></li>     
@@ -36,7 +41,7 @@
    <li><span>Tình hình dịch cả nước</span></li>
  </ul>
  <ul style="justify-content: flex-end;">
-   <li><input class="input_sreach" type="text" placeholder='Nhập tên Tỉnh/TP...' id="sreach_input"/></li>
+   <li><input class="input_sreach" type="text" placeholder='Nhập tên hoặc quy ước...' id="sreach_input"/></li>
  </ul>
 </div>
 <div class="home__juncture-flex">
@@ -67,7 +72,7 @@
   var sreach_text = '';
   sreach_input.addEventListener('input', function (evt) {
    sreach_text = sreach_input.value;
-   render();
+   render_table();
  });
 </script>
 <script type="text/javascript">
@@ -106,17 +111,21 @@ function topFunction() {
 }
 </script>
 <script type="text/javascript">
- var data = '';
-  //https://covid19.gov.vn/
+  var data = '';
+  //https://covid19.gov.vn/  
   const URL = "https://static.pipezero.com/covid/data.json";
-  fetch(URL)
-  .then((res) => res.text())
-  .then((text) => {
-   data = JSON.parse(text);
-   render();
- }).catch((err) => console.log(err));
+  function fetch_data(){
+   fetch(URL)
+   .then((res) => res.text())
+   .then((text) => {
+    data = JSON.parse(text);
+    render();
+  }).catch((err) => console.log(err));
+ }
 
-  function render(){
+ fetch_data();
+
+ function render(){
     // data top info internal
     let internal_today_data = new Object();
     internal_today_data.death = data.today.internal.death ? data.today.internal.death : "0";
@@ -177,6 +186,10 @@ function topFunction() {
     '</p><p class="note hidden">Hôm nay +<span>' +
     numberWithCommas(world_today_data.death) +
     "</span></p></div>";
+    render_table();
+  }
+
+  function render_table(){
     // data of locations internal
     let locations = data.locations;
     // render
@@ -187,23 +200,31 @@ function topFunction() {
      locations_data.cases = locations[i].cases ? numberWithCommas(locations[i].cases) : "0";
      locations_data.casesToday = locations[i].casesToday ? '+'+numberWithCommas(locations[i].casesToday) : "-";
      locations_data.death = locations[i].death ? numberWithCommas(locations[i].cases) : "0";
-     var regex = new RegExp('.*'+sreach_text.toLowerCase()+'.*');
-     var matchesRegex = regex.test(locations_data.name.toLowerCase());
-     if (matchesRegex || sreach_text.length === 0) {
-      textdata +=
-      '<div class="row"><span class="city">' +
-      locations_data.name +
-      '</span><span class="total">' +
-      locations_data.cases  +
-      '</span><span class="daynow red">' +
-      locations_data.casesToday +
-      '</span><span class="die">' +
-      locations_data.death +
-      "</span></div>";
-    }
+	  // so sánh sâu giống like '%value%' trong sql
+    var regex = new RegExp('.*'+sreach_text.toLowerCase()+'.*');
+    var matchesRegex1 = regex.test(locations_data.name.toLowerCase());
+	  // tìm kí tự viết tắt
+    let obj = quyuoc.find(o => o.name.toLowerCase() === locations_data.name.toLowerCase());
+    // so sánh 
+    var matchesRegex2 = regex.test(obj.sortname.toLowerCase());
+	  // xét điều khiện xuất hiện
+   if (matchesRegex1 || sreach_text.length === 0 || matchesRegex2) {
+    textdata +=
+    '<div class="row"><span class="city">' +
+    locations_data.name +
+    '</span><span class="total">' +
+    locations_data.cases  +
+    '</span><span class="daynow red">' +
+    locations_data.casesToday +
+    '</span><span class="die">' +
+    locations_data.death +
+    "</span></div>";
   }
-  document.getElementById("data_locations").innerHTML = textdata;
 }
+document.getElementById("data_locations").innerHTML = textdata;
+}
+// ký hiệu quy ước viết tắt
+const quyuoc=[{"name":"An Giang","sortname":"AG"},{"name":"Bà Rịa – Vũng Tàu","sortname":"BV"},{"name":"Bạc Liêu","sortname":"BL"},{"name":"Bắc Kạn","sortname":"BK"},{"name":"Bắc Giang","sortname":"BG"},{"name":"Bắc Ninh","sortname":"BN"},{"name":"Bến Tre","sortname":"BT"},{"name":"Bình Dương","sortname":"BD"},{"name":"Bình Định","sortname":"BĐ"},{"name":"Bình Phước","sortname":"BP"},{"name":"Bình Thuận","sortname":"BTh"},{"name":"Cà Mau","sortname":"CM"},{"name":"Cao Bằng","sortname":"CB"},{"name":"Cần Thơ","sortname":"CT"},{"name":"Đà Nẵng","sortname":"ĐNa"},{"name":"Đắk Lắk","sortname":"ĐL"},{"name":"Đắk Nông","sortname":"ĐNo"},{"name":"Điện Biên","sortname":"ĐB"},{"name":"Đồng Nai","sortname":"ĐN"},{"name":"Đồng Tháp","sortname":"ĐT"},{"name":"Gia Lai","sortname":"GL"},{"name":"Hà Giang","sortname":"HG"},{"name":"Hà Nam","sortname":"HNa"},{"name":"Hà Nội","sortname":"HN"},{"name":"Hà Tĩnh","sortname":"HT"},{"name":"Hải Dương","sortname":"HD"},{"name":"Hải Phòng","sortname":"HP"},{"name":"Hậu Giang","sortname":"HGi"},{"name":"Hòa Bình","sortname":"HB"},{"name":"TP. Hồ Chí Minh","sortname":"SG"},{"name":"Hưng Yên","sortname":"HY"},{"name":"Khánh Hòa","sortname":"KH"},{"name":"Kiên Giang","sortname":"KG"},{"name":"Kon Tum","sortname":"KT"},{"name":"Lai Châu","sortname":"LC"},{"name":"Lạng Sơn","sortname":"LS"},{"name":"Lào Cai","sortname":"LCa"},{"name":"Lâm Đồng","sortname":"LĐ"},{"name":"Long An","sortname":"LA"},{"name":"Nam Định","sortname":"NĐ"},{"name":"Nghệ An","sortname":"NA"},{"name":"Ninh Bình","sortname":"NB"},{"name":"Ninh Thuận","sortname":"NT"},{"name":"Phú Thọ","sortname":"PT"},{"name":"Phú Yên","sortname":"PY"},{"name":"Quảng Bình","sortname":"QB"},{"name":"Quảng Nam","sortname":"QNa"},{"name":"Quảng Ngãi","sortname":"QNg"},{"name":"Quảng Ninh","sortname":"QN"},{"name":"Quảng Trị","sortname":"QT"},{"name":"Sóc Trăng","sortname":"ST"},{"name":"Sơn La","sortname":"SL"},{"name":"Tây Ninh","sortname":"TN"},{"name":"Thái Bình","sortname":"TB"},{"name":"Thái Nguyên","sortname":"TNg"},{"name":"Thanh Hóa","sortname":"TH"},{"name":"Thừa Thiên Huế","sortname":"TTH"},{"name":"Tiền Giang","sortname":"TG"},{"name":"Trà Vinh","sortname":"TV"},{"name":"Tuyên Quang","sortname":"TQ"},{"name":"Vĩnh Long","sortname":"VL"},{"name":"Vĩnh Phúc","sortname":"VP"},{"name":"Yên Bái","sortname":"YB"}]
 </script>
 <script type="text/javascript">
  var data_table = document.getElementById('data_locations');
