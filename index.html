@@ -1,197 +1,218 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="covid19.gov.vn.css" />
+ <meta name="viewport" content="width=device-width,initial-scale=1" />
+ <link rel="stylesheet" href="covid19.gov.vn.css" />
 </head>
 <body>
-  <div id="topCovidStatistics">
-    <div id="topinfo">
-      <div class="box-top">
-        <div class="home__statistical-nav">
-          <ul style="justify-content: flex-start;">
-            <li><a href="javascript:open('tabvi', 'vi');" id="tabvi" class="tablinks active">Việt Nam</a></li>
-            <li><a href="javascript:open('taben', 'en');" id="taben" class="tablinks">Thế giới</a></li>
-          </ul>
-        </div>
-        <div class="home__statistical-nav-content">
-          <div class="content-tab show" id="vi"><div class="home__statistical-list"></div></div>
-          <div class="content-tab" id="en"><div class="home__statistical-list"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br />
-  <div class="home__statistical-nav">
-    <ul>
-      <li><span>Tình hình dịch cả nước</span></li>
+ <div id="topCovidStatistics">
+  <div id="topinfo">
+   <div class="box-top">
+    <div class="home__statistical-nav">
+     <ul style="justify-content: flex-start;">
+      <li><a href="javascript:open('tabvi', 'vi');" id="tabvi" class="tablinks active">Việt Nam</a></li>
+      <li><a href="javascript:open('taben', 'en');" id="taben" class="tablinks">Thế giới</a></li>
     </ul>
   </div>
-  <div class="home__juncture-flex">
-    <div class="box-juncture" id="location" style="width: 100%;">
-      <div class="table-left">
-        <div class="row head"><span class="city">Tỉnh/TP</span><span class="total">Tổng số ca</span><span class="daynow">Hôm nay</span><span class="die">Tử vong</span></div>
-        <div class="tbody" id="data_locations"></div>
-        <div class="btn-load btn-load--tinhthanh">
-          <a href="javascript:ShowMore();" class="xem-them"  id="xt" title="Xem thêm">Xem thêm</a>
-          <a href="javascript:Hidden();" class="rut-gon hidden" id="rg" title="Rút gọn">Rút gọn</a>
-        </div>
-      </div>
-    </div>
+  <div class="home__statistical-nav-content">
+   <div class="content-tab show" id="vi">
+    <div class="home__statistical-list"></div>
   </div>
-  <div id="back-to-top">
-    <a href="javascript:topFunction();" id="btti" class="layout__sticky-icon">
-      <span class="icon">
-        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 13.5L7 1" stroke="#9F9F9F" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
-          <path d="M1 6.77783L7 0.777832L13 6.77783" stroke="#9F9F9F" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
-
-      </span>
-      <span class="text">Top</span>
-    </a>
+  <div class="content-tab" id="en">
+    <div class="home__statistical-list"></div>
   </div>
-  <script type="text/javascript">
-    var btn_to_top = document.getElementById("back-to-top");
-    var inner_btn =  document.getElementById("btti");
-
-    window.onload = function() {scrollFunction()};
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        btn_to_top.className = "show";
-        inner_btn.style.display ='flex';
-      } else {
-        btn_to_top.classList.remove("show");
-        inner_btn.style.display ='none';
-      }
-    }
-
-    function topFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
-  </script>
-  <script type="text/javascript">
-    function open(e, t) {
-      var s, n, a;
-      for (n = document.getElementsByClassName("content-tab"), s = 0; s < n.length; s++) n[s].classList.remove("show");
-        for (a = document.getElementsByClassName("tablinks"), s = 0; s < a.length; s++) a[s].classList.remove("active");
-          (document.getElementById(t).className += " show"), (document.getElementById(e).className += " active");
-      }
-    </script>
-    <script type="text/javascript">
-      function numberWithCommas(e) {
-        return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }
-    </script>
-    <script type="text/javascript">
-            //https://covid19.gov.vn/
-            const URL = "https://static.pipezero.com/covid/data.json";
-            fetch(URL)
-            .then((res) => res.text())
-            .then((text) => {
-              const data = JSON.parse(text);
-                    // data top info internal
-                    //
-                    let internal_today_data = new Object();
-                    internal_today_data.death = data.today.internal.death ? data.today.internal.death : "0";
-                    internal_today_data.treating = data.today.internal.treating ? data.today.internal.treating : "0";
-                    internal_today_data.cases = data.today.internal.cases ? data.today.internal.cases : "0";
-                    internal_today_data.recovered = data.today.internal.recovered ? data.today.internal.recovered : "0";
-                    let internal_total_data = new Object();
-                    internal_total_data.death = data.total.internal.death ? data.total.internal.death : "0";
-                    internal_total_data.treating = data.total.internal.treating ? data.total.internal.treating : "0";
-                    internal_total_data.cases = data.total.internal.cases ? data.total.internal.cases : "0";
-                    internal_total_data.recovered = data.total.internal.recovered ? data.total.internal.recovered : "0";
-                    // render top info of internal
-                    document.getElementById("vi").getElementsByClassName("home__statistical-list")[0].innerHTML =
-                    '<div class="item"><p class="text">SỐ CA NHIỄM</p><p class="value">' +
-                    numberWithCommas(internal_total_data.cases) +
-                    '</p><p class="note">Hôm nay +<span>' +
-                    numberWithCommas(internal_today_data.cases) +
-                    '</span></p></div><div class="item hidden"><p class="text">ĐANG ĐIỀU TRỊ</p><p class="value">' +
-                    numberWithCommas(internal_total_data.treating) +
-                    '</p><p class="note hidden">Hôm nay +<span>' +
-                    numberWithCommas(internal_today_data.treating) +
-                    '</span></p></div><div class="item"><p class="text">KHỎI</p><p class="value">' +
-                    numberWithCommas(internal_total_data.recovered) +
-                    '</p><p class="note hidden">Hôm nay +<span>' +
-                    numberWithCommas(internal_today_data.recovered) +
-                    '</span></p></div><div class="item"><p class="text">TỬ VONG</p><p class="value">' +
-                    numberWithCommas(internal_total_data.death) +
-                    '</p><p class="note hidden">Hôm nay +<span>' +
-                    numberWithCommas(internal_today_data.death) +
-                    "</span></p></div>";
-                    // data top info world
-                    //
-                    let world_today_data = new Object();
-                    world_today_data.death = data.today.world.death ? data.today.world.death : "0";
-                    world_today_data.treating = data.today.world.treating ? data.today.world.treating : "0";
-                    world_today_data.cases = data.today.world.cases ? data.today.world.cases : "0";
-                    world_today_data.recovered = data.today.world.recovered ? data.today.world.recovered : "0";
-                    let world_total_data = new Object();
-                    world_total_data.death = data.total.world.death ? data.total.world.death : "0";
-                    world_total_data.treating = data.total.world.treating ? data.total.world.treating : "0";
-                    world_total_data.cases = data.total.world.cases ? data.total.world.cases : "0";
-                    world_total_data.recovered = data.total.world.recovered ? data.total.world.recovered : "0";
-                    // render top info of world
-                    document.getElementById("en").getElementsByClassName("home__statistical-list")[0].innerHTML =
-                    '<div class="item"><p class="text">SỐ CA NHIỄM</p><p class="value">' +
-                    numberWithCommas(world_total_data.cases) +
-                    '</p><p class="note">Hôm nay +<span>' +
-                    numberWithCommas(world_today_data.cases) +
-                    '</span></p></div><div class="item hidden"><p class="text">ĐANG ĐIỀU TRỊ</p><p class="value">' +
-                    numberWithCommas(world_total_data.treating) +
-                    '</p><p class="note hidden">Hôm nay +<span>' +
-                    numberWithCommas(world_today_data.treating) +
-                    '</span></p></div><div class="item"><p class="text">KHỎI</p><p class="value">' +
-                    numberWithCommas(world_total_data.recovered) +
-                    '</p><p class="note hidden">Hôm nay +<span>' +
-                    numberWithCommas(world_today_data.recovered) +
-                    '</span></p></div><div class="item"><p class="text">TỬ VONG</p><p class="value">' +
-                    numberWithCommas(world_total_data.death) +
-                    '</p><p class="note hidden">Hôm nay +<span>' +
-                    numberWithCommas(world_today_data.death) +
-                    "</span></p></div>";
-                    // data of locations internal
-                    let locations = data.locations;
-                    // render
-                    var textdata = "";
-                    for (var i in locations) {
-					  var locations_data = new Object();
-					  locations_data.name = locations[i].name ? locations[i].name : "";
-					  locations_data.cases = locations[i].cases ? numberWithCommas(locations[i].cases) : "0";
-					  locations_data.casesToday = locations[i].casesToday ? '+'+numberWithCommas(locations[i].casesToday) : "-";
-					  locations_data.death = locations[i].death ? numberWithCommas(locations[i].cases) : "0";
-                      textdata +=
-                      '<div class="row"><span class="city">' +
-                      locations_data.name +
-                      '</span><span class="total">' +
-                      locations_data.cases  +
-                      '</span><span class="daynow red">' +
-                      locations_data.casesToday +
-                      '</span><span class="die">' +
-                      locations_data.death +
-                      "</span></div>";
-                      document.getElementById("data_locations").innerHTML = textdata;
-                    }
-                  })
-.catch((err) => console.log(err));
+</div>
+</div>
+</div>
+</div>
+<br />
+<div class="home__statistical-nav">
+  <ul>
+   <li><span>Tình hình dịch cả nước</span></li>
+ </ul>
+ <ul style="justify-content: flex-end;">
+   <li><input class="input_sreach" type="text" placeholder='Nhập tên Tỉnh/TP...' id="sreach_input"/></li>
+ </ul>
+</div>
+<div class="home__juncture-flex">
+  <div class="box-juncture" id="location" style="width: 100%;">
+   <div class="table-left">
+    <div class="row head"><span class="city">Tỉnh/TP</span><span class="total">Tổng số ca</span><span class="daynow">Hôm nay</span><span class="die">Tử vong</span></div>
+    <div class="tbody" id="data_locations"></div>
+    <div class="btn-load btn-load--tinhthanh">
+     <a href="javascript:ShowMore();" class="xem-them"  id="xt" title="Xem thêm">Xem thêm</a>
+     <a href="javascript:Hidden();" class="rut-gon hidden" id="rg" title="Rút gọn">Rút gọn</a>
+   </div>
+ </div>
+</div>
+</div>
+<div id="back-to-top">
+  <a href="javascript:topFunction();" id="btti" class="layout__sticky-icon">
+   <span class="icon">
+    <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+     <path d="M7 13.5L7 1" stroke="#9F9F9F" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+     <path d="M1 6.77783L7 0.777832L13 6.77783" stroke="#9F9F9F" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+   </svg>
+ </span>
+ <span class="text">Top</span>
+</a>
+</div>
+<script type="text/javascript">
+  var sreach_input = document.getElementById('sreach_input');
+  var sreach_text = '';
+  sreach_input.addEventListener('input', function (evt) {
+   sreach_text = sreach_input.value;
+   render();
+ });
 </script>
 <script type="text/javascript">
-  var data_table = document.getElementById('data_locations');
-  function ShowMore(){
-    data_table.classList.add('all');
-    document.getElementById('xt').classList.add('hidden');
-    document.getElementById('rg').classList.remove('hidden');    
+  var btn_to_top = document.getElementById("back-to-top");
+  var inner_btn =  document.getElementById("btti");
+  
+  window.onload = function() {scrollFunction()};
+  window.onscroll = function() {scrollFunction()};
+  
+  function scrollFunction() {
+   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    btn_to_top.className = "show";
+    inner_btn.style.display ='flex';
+  } else {
+    btn_to_top.classList.remove("show");
+    inner_btn.style.display ='none';
   }
-  function Hidden(){
-    data_table.classList.remove('all');
-    document.getElementById('xt').classList.remove('hidden');
-    document.getElementById('rg').classList.add('hidden');    
+}
+
+function topFunction() {
+ document.body.scrollTop = 0;
+ document.documentElement.scrollTop = 0;
+}
+</script>
+<script type="text/javascript">
+  function open(e, t) {
+   var s, n, a;
+   for (n = document.getElementsByClassName("content-tab"), s = 0; s < n.length; s++) n[s].classList.remove("show");
+    for (a = document.getElementsByClassName("tablinks"), s = 0; s < a.length; s++) a[s].classList.remove("active");
+     (document.getElementById(t).className += " show"), (document.getElementById(e).className += " active");
+ }
+</script>
+<script type="text/javascript">
+ function numberWithCommas(e) {
+  return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+</script>
+<script type="text/javascript">
+ var data = '';
+  //https://covid19.gov.vn/
+  const URL = "https://static.pipezero.com/covid/data.json";
+  fetch(URL)
+  .then((res) => res.text())
+  .then((text) => {
+   data = JSON.parse(text);
+   render();
+ }).catch((err) => console.log(err));
+
+  function render(){
+    // data top info internal
+    let internal_today_data = new Object();
+    internal_today_data.death = data.today.internal.death ? data.today.internal.death : "0";
+    internal_today_data.treating = data.today.internal.treating ? data.today.internal.treating : "0";
+    internal_today_data.cases = data.today.internal.cases ? data.today.internal.cases : "0";
+    internal_today_data.recovered = data.today.internal.recovered ? data.today.internal.recovered : "0";
+    let internal_total_data = new Object();
+    internal_total_data.death = data.total.internal.death ? data.total.internal.death : "0";
+    internal_total_data.treating = data.total.internal.treating ? data.total.internal.treating : "0";
+    internal_total_data.cases = data.total.internal.cases ? data.total.internal.cases : "0";
+    internal_total_data.recovered = data.total.internal.recovered ? data.total.internal.recovered : "0";
+    // render top info of internal
+    document.getElementById("vi").getElementsByClassName("home__statistical-list")[0].innerHTML =
+    '<div class="item"><p class="text">SỐ CA NHIỄM</p><p class="value">' +
+    numberWithCommas(internal_total_data.cases) +
+    '</p><p class="note">Hôm nay +<span>' +
+    numberWithCommas(internal_today_data.cases) +
+    '</span></p></div><div class="item hidden"><p class="text">ĐANG ĐIỀU TRỊ</p><p class="value">' +
+    numberWithCommas(internal_total_data.treating) +
+    '</p><p class="note hidden">Hôm nay +<span>' +
+    numberWithCommas(internal_today_data.treating) +
+    '</span></p></div><div class="item"><p class="text">KHỎI</p><p class="value">' +
+    numberWithCommas(internal_total_data.recovered) +
+    '</p><p class="note hidden">Hôm nay +<span>' +
+    numberWithCommas(internal_today_data.recovered) +
+    '</span></p></div><div class="item"><p class="text">TỬ VONG</p><p class="value">' +
+    numberWithCommas(internal_total_data.death) +
+    '</p><p class="note hidden">Hôm nay +<span>' +
+    numberWithCommas(internal_today_data.death) +
+    "</span></p></div>";
+    // data top info world
+    let world_today_data = new Object();
+    world_today_data.death = data.today.world.death ? data.today.world.death : "0";
+    world_today_data.treating = data.today.world.treating ? data.today.world.treating : "0";
+    world_today_data.cases = data.today.world.cases ? data.today.world.cases : "0";
+    world_today_data.recovered = data.today.world.recovered ? data.today.world.recovered : "0";
+    let world_total_data = new Object();
+    world_total_data.death = data.total.world.death ? data.total.world.death : "0";
+    world_total_data.treating = data.total.world.treating ? data.total.world.treating : "0";
+    world_total_data.cases = data.total.world.cases ? data.total.world.cases : "0";
+    world_total_data.recovered = data.total.world.recovered ? data.total.world.recovered : "0";
+    // render top info of world
+    document.getElementById("en").getElementsByClassName("home__statistical-list")[0].innerHTML =
+    '<div class="item"><p class="text">SỐ CA NHIỄM</p><p class="value">' +
+    numberWithCommas(world_total_data.cases) +
+    '</p><p class="note">Hôm nay +<span>' +
+    numberWithCommas(world_today_data.cases) +
+    '</span></p></div><div class="item hidden"><p class="text">ĐANG ĐIỀU TRỊ</p><p class="value">' +
+    numberWithCommas(world_total_data.treating) +
+    '</p><p class="note hidden">Hôm nay +<span>' +
+    numberWithCommas(world_today_data.treating) +
+    '</span></p></div><div class="item"><p class="text">KHỎI</p><p class="value">' +
+    numberWithCommas(world_total_data.recovered) +
+    '</p><p class="note hidden">Hôm nay +<span>' +
+    numberWithCommas(world_today_data.recovered) +
+    '</span></p></div><div class="item"><p class="text">TỬ VONG</p><p class="value">' +
+    numberWithCommas(world_total_data.death) +
+    '</p><p class="note hidden">Hôm nay +<span>' +
+    numberWithCommas(world_today_data.death) +
+    "</span></p></div>";
+    // data of locations internal
+    let locations = data.locations;
+    // render
+    var textdata = "";
+    for (var i in locations) {
+     var locations_data = new Object();            
+     locations_data.name = locations[i].name ? locations[i].name : "";
+     locations_data.cases = locations[i].cases ? numberWithCommas(locations[i].cases) : "0";
+     locations_data.casesToday = locations[i].casesToday ? '+'+numberWithCommas(locations[i].casesToday) : "-";
+     locations_data.death = locations[i].death ? numberWithCommas(locations[i].cases) : "0";
+     var regex = new RegExp('.*'+sreach_text.toLowerCase()+'.*');
+     var matchesRegex = regex.test(locations_data.name.toLowerCase());
+     if (matchesRegex || sreach_text.length === 0) {
+      textdata +=
+      '<div class="row"><span class="city">' +
+      locations_data.name +
+      '</span><span class="total">' +
+      locations_data.cases  +
+      '</span><span class="daynow red">' +
+      locations_data.casesToday +
+      '</span><span class="die">' +
+      locations_data.death +
+      "</span></div>";
+    }
   }
+  document.getElementById("data_locations").innerHTML = textdata;
+}
+</script>
+<script type="text/javascript">
+ var data_table = document.getElementById('data_locations');
+ function ShowMore(){
+  data_table.classList.add('all');
+  document.getElementById('xt').classList.add('hidden');
+  document.getElementById('rg').classList.remove('hidden');    
+}
+
+function Hidden(){
+  data_table.classList.remove('all');
+  document.getElementById('xt').classList.remove('hidden');
+  document.getElementById('rg').classList.add('hidden');    
+}
 </script>
 </body>
 </html>
