@@ -233,11 +233,11 @@ textdata +=
 '<div class="row"><span class="city">' +
 total_table.name +
 '</span><span class="total">' +
-total_table.cases  +
+numberWithCommas(total_table.cases)  +
 '</span><span class="daynow red">' +
-total_table.casesToday +
+numberWithCommas(total_table.casesToday) +
 '</span><span class="die">' +
-total_table.death +
+numberWithCommas(total_table.death) +
 "</span></div>";
 document.getElementById("data_locations").innerHTML = textdata;
 }
