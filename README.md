@@ -4,7 +4,7 @@ Các thông số đặt hidden ở giao diện gốc tức là không còn đư�
 Thông số được cập nhật theo dữ liệu tính từ 16h hôm trước tới 16h hôm sau của mỗi ngày<br>
 Chưa thử biểu đồ (dữ liệu từ api có '.overview') <br>
 <b>Cấu trúc json:</b><br>
-&nbsp;json = {total: {…}, today: {…}, overview: Array(7), locations: Array(63)} <br>
+&nbsp;<b>json = {total: {…}, today: {…}, overview: Array(7), locations: Array(63)}</b><br>
 &nbsp;<b>json.total:</b> {internal: {…}, world: {…}} <br>
 &nbsp;&nbsp;internal: {death: … treating: …, cases: …, recovered: …} <br>
 &nbsp;&nbsp;world: {death: …, treating: …, cases: …, recovered: …} <br>
