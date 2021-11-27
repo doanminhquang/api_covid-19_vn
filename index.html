@@ -32,9 +32,47 @@
       <div class="table-left">
         <div class="row head"><span class="city">Tỉnh/TP</span><span class="total">Tổng số ca</span><span class="daynow">Hôm nay</span><span class="die">Tử vong</span></div>
         <div class="tbody" id="data_locations"></div>
+        <div class="btn-load btn-load--tinhthanh">
+          <a href="javascript:ShowMore();" class="xem-them"  id="xt" title="Xem thêm">Xem thêm</a>
+          <a href="javascript:Hidden();" class="rut-gon hidden" id="rg" title="Rút gọn">Rút gọn</a>
+        </div>
       </div>
     </div>
   </div>
+  <div id="back-to-top">
+    <a href="javascript:topFunction();" id="btti" class="layout__sticky-icon">
+      <span class="icon">
+        <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 13.5L7 1" stroke="#9F9F9F" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M1 6.77783L7 0.777832L13 6.77783" stroke="#9F9F9F" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+
+      </span>
+      <span class="text">Top</span>
+    </a>
+  </div>
+  <script type="text/javascript">
+    var btn_to_top = document.getElementById("back-to-top");
+    var inner_btn =  document.getElementById("btti");
+
+    window.onload = function() {scrollFunction()};
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        btn_to_top.className = "show";
+        inner_btn.style.display ='flex';
+      } else {
+        btn_to_top.classList.remove("show");
+        inner_btn.style.display ='none';
+      }
+    }
+
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
   <script type="text/javascript">
     function open(e, t) {
       var s, n, a;
@@ -136,6 +174,21 @@
                     }
                   })
 .catch((err) => console.log(err));
+</script>
+
+<script type="text/javascript">
+  var data_table = document.getElementById('data_locations');
+  function ShowMore(){
+    data_table.classList.add('all');
+    document.getElementById('xt').classList.add('hidden');
+    document.getElementById('rg').classList.remove('hidden');    
+  }
+
+  function Hidden(){
+    data_table.classList.remove('all');
+    document.getElementById('xt').classList.remove('hidden');
+    document.getElementById('rg').classList.add('hidden');    
+  }
 </script>
 </body>
 </html>
