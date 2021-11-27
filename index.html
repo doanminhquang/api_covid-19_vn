@@ -12,7 +12,7 @@
   </div>
   <div class="home__statistical-nav">
     <ul style="justify-content: flex-start;">
-      <li><a class="active" style='border: none' href="https://covid19.gov.vn/">Lưu ý: Dữ liệu cập nhật vào khoảng 18H hàng ngày, dữ liệu có thể bị sai lệch với bản tin, vui lòng cập nhật chính xác tại bản tin</a></li>     
+      <li><a class="active" style='border: none'>Lưu ý: Dữ liệu cập nhật vào khoảng 18H hàng ngày</a></li>     
     </ul>
   </div>
   <div id="topCovidStatistics">
@@ -194,6 +194,11 @@ function topFunction() {
     let locations = data.locations;
     // render
     var textdata = "";
+    var total_table = new Object();
+    total_table.name = 'Tổng dữ liệu trong bảng';
+    total_table.cases = 0;
+    total_table.casesToday = 0;
+    total_table.death = 0;
     for (var i in locations) {
      var locations_data = new Object();            
      locations_data.name = locations[i].name ? locations[i].name : "";
@@ -218,9 +223,22 @@ function topFunction() {
     locations_data.casesToday +
     '</span><span class="die">' +
     locations_data.death +
-    "</span></div>";
+    "</span></div>";	
+    total_table.cases += locations[i].cases;
+    total_table.casesToday += locations[i].casesToday;
+    total_table.death += locations[i].death;
   }
 }
+textdata +=
+'<div class="row"><span class="city">' +
+total_table.name +
+'</span><span class="total">' +
+total_table.cases  +
+'</span><span class="daynow red">' +
+total_table.casesToday +
+'</span><span class="die">' +
+total_table.death +
+"</span></div>";
 document.getElementById("data_locations").innerHTML = textdata;
 }
 // ký hiệu quy ước viết tắt
