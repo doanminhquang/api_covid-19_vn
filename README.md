@@ -1,5 +1,5 @@
 # api_covid-19_vn
-Api (nguyên gốc: https://static.pipezero.com/covid/data.json) + Giao diện (có thay đổi nhẹ) tìm thấy tại: https://covid19.gov.vn/ <br>
+Api (nguyên gốc: https://static.pipezero.com/covid/data.json) + Giao diện (có thay đổi nhẹ) tìm thấy tại: https://covid19.gov.vn/ <br><br>
 ![api](https://github.com/doanminhquang/api_covid-19_vn/blob/main/api.png?raw=true)
 <b>Lưu ý:</b><br>
 &nbsp;Các thông số đặt hidden ở giao diện gốc tức là không còn được update => sai<br>
