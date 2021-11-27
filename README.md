@@ -12,13 +12,13 @@ Chưa thử biểu đồ (dữ liệu từ api có '.overview') <br>
 &nbsp;&nbsp;internal: {death: …, treating: …, cases: …, recovered: …} <br>
 &nbsp;&nbsp;world: {death: …, treating: …, cases: …, recovered: …} <br>
 &nbsp;<b>json.overview:</b> (7) [{…}, {…}, {…}, {…}, {…}, {…}, {…}] <br>
-&nbsp;&nbsp;0: {date: '20-11', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
-&nbsp;&nbsp;1: {date: '21-11', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
-&nbsp;&nbsp;2: {date: '22-11', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
-&nbsp;&nbsp;3: {date: '23-11', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
-&nbsp;&nbsp;4: {date: '24-11', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
-&nbsp;&nbsp;5: {date: '25-11', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
-&nbsp;&nbsp;6: {date: '26-11', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
+&nbsp;&nbsp;0: {date: 'dd-mm', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
+&nbsp;&nbsp;1: {date: 'dd-mm', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
+&nbsp;&nbsp;2: {date: 'dd-mm', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
+&nbsp;&nbsp;3: {date: 'dd-mm', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
+&nbsp;&nbsp;4: {date: 'dd-mm', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
+&nbsp;&nbsp;5: {date: 'dd-mm', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
+&nbsp;&nbsp;6: {date: 'dd-mm', death: …, treating: …, cases: …, recovered: …, treating: …} <br>
 &nbsp;<b>json.locations:</b> (63) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}] <br>
 &nbsp;&nbsp;0: {name: 'TP. Hồ Chí Minh', death: …, treating: …, cases: …, recovered: …, treating: … } <br>
 &nbsp;&nbsp;1: {name: 'Bình Dương', death: …, treating: …, cases: …, recovered: …, treating: … } <br>
