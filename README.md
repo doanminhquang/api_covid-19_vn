@@ -86,5 +86,4 @@ Api (nguyên gốc: https://static.pipezero.com/covid/data.json) + Giao diện (
 &ensp;&ensp;61: {name: 'Lai Châu', death: …, treating: …, cases: …, recovered: …, treating: … } <br>
 &ensp;&ensp;62: {name: 'Bắc Kạn', death: …, treating: …, cases: …, recovered: …, treating: … } <br>
 Demo tại: http://doanminhquang.github.io/api_covid-19_vn/ hoặc xem trực tiếp tại nguồn chính chủ: https://covid19.gov.vn/
-Dữ liệu có thể lệch so với bản tin, vui lòng kiểm tra bảng tin tại https://covid19.gov.vn/ để chính xác nhất 
-![có thể bị sai lệch](https://github.com/doanminhquang/api_covid-19_vn/blob/main/27112021.png?raw=true)
+
