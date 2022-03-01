@@ -203,7 +203,7 @@ function topFunction() {
      locations_data.name = locations[i].name ? locations[i].name : "";
      locations_data.cases = locations[i].cases ? numberWithCommas(locations[i].cases) : "0";
      locations_data.casesToday = locations[i].casesToday ? '+'+numberWithCommas(locations[i].casesToday) : "-";
-     locations_data.death = locations[i].death ? numberWithCommas(locations[i].cases) : "0";
+     locations_data.death = locations[i].death ? numberWithCommas(locations[i].death) : "0";
 	  // so sánh sâu giống like '%value%' trong sql
     var regex = new RegExp('.*'+sreach_text.toLowerCase()+'.*');
     var matchesRegex1 = regex.test(locations_data.name.toLowerCase());
