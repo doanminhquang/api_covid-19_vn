@@ -7,7 +7,7 @@
    <body>
       <div class="home__statistical-nav">
          <ul style="justify-content: flex-end;">
-            <li><a href="javascript:fetch_data();" style="margin-right: 0">Làm mới dữ liệu</a></li>
+            <li><a href="javascript:ReLoad_Data();" style="margin-right: 0">Làm mới dữ liệu</a></li>
          </ul>
       </div>
       <div class="home__statistical-nav">
@@ -42,7 +42,9 @@
          </ul>
          <ul style="justify-content: flex-end;">
             <li><button style='margin-right: 5px; background: white; border: 1px solid #2e3192; 
-               border-radius: 5px; height: 38px; margin-top: 8px; color: #2e3192' onclick="ExportCSV()">Export CSV VN</button></li>
+               border-radius: 5px; height: 38px; margin-top: 8px; color: #2e3192' onclick="ExportCSV('Global')">Export CSV Global</button></li>
+            <li><button style='margin-right: 5px; background: white; border: 1px solid #2e3192; 
+               border-radius: 5px; height: 38px; margin-top: 8px; color: #2e3192' onclick="ExportCSV('VN')">Export CSV VN</button></li>
             <li><input class="input_sreach" type="text" placeholder='Nhập tên hoặc quy ước...' id="sreach_input"/></li>
          </ul>
       </div>
@@ -114,8 +116,11 @@
       </script>
       <script type="text/javascript">
          var data = '';
+         var data_global = '';
          //https://covid19.gov.vn/  
          const URL = "https://static.pipezero.com/covid/data.json";
+         const URL_Global = "https://api.apify.com/v2/datasets/UmDvyef6tqie4oAMN/items";	
+         
          function fetch_data(){
           fetch(URL)
           .then((res) => res.text())
@@ -124,8 +129,22 @@
            render();
          }).catch((err) => console.log(err));
          }
-         
-         fetch_data();
+                  
+         function fetch_data_global(){
+          fetch(URL_Global)
+          .then((res) => res.text())
+          .then((text) => {
+           data_global = JSON.parse(text);
+           render();
+         }).catch((err) => console.log(err));
+         }
+		 
+		 function ReLoad_Data(){
+		    fetch_data();
+			fetch_data_global();
+		 }
+		 
+		 ReLoad_Data();
          
          function render(){
            // data top info internal
@@ -261,13 +280,15 @@
          }
       </script>
       <script type="text/javascript">
-         function ExportCSV(){
-         	const items = data.locations;
+         function ExportCSV(str){
+         	const items = str === 'VN' ? data.locations : data_global[0].regionData;
          	const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
          	const header = Object.keys(items[0]);
          	const csv = [
          	  header.join(','), // Tiêu đề 
-         	  ...items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+         	  ...items.map(row => 
+			  header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(',') 
+			  )
          	].join('\r\n');
          
          	//Tải file
@@ -275,7 +296,7 @@
             var blob = new Blob(["\ufeff", csv]);
             var url = window.URL.createObjectURL(blob);
             downloadLink.href = url;
-            downloadLink.download = "Data_Covid_VN.csv";  // Tên file
+            downloadLink.download = str === 'VN' ? "Data_Covid_VN.csv": "Data_Covid_Global.csv";  // Tên file
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
