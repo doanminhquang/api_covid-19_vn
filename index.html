@@ -116,7 +116,7 @@
       </script>
       <script type="text/javascript">
          var data = '';
-         var data_global = '';
+         var data_global = [];
          //https://covid19.gov.vn/  
          const URL = "https://static.pipezero.com/covid/data.json";
          const URL_Global = "https://api.apify.com/v2/datasets/UmDvyef6tqie4oAMN/items";	
@@ -135,16 +135,34 @@
           .then((res) => res.text())
           .then((text) => {
            data_global = JSON.parse(text);
-           render();
+           //
+         let temparr = [];
+         let items = data_global ? data_global[0].regionData : [];
+         let None = ['World', 
+         'Europe', 
+         'Asia', 
+         'North America', 
+         'South America', 
+         'Africa', 
+         'Oceania', 
+         '', 
+         'Total:']
+         for(let i = 0; i < items.length; i++){
+			if(None.indexOf(items[i].country) === -1){
+			temparr.push(items[i]);
+			}
+         }
+         data_global[0].regionData = temparr;
+         //
          }).catch((err) => console.log(err));
          }
-		 
-		 function ReLoad_Data(){
-		    fetch_data();
-			fetch_data_global();
-		 }
-		 
-		 ReLoad_Data();
+         
+         function ReLoad_Data(){
+         fetch_data();
+         fetch_data_global();
+         }
+         
+         ReLoad_Data();
          
          function render(){
            // data top info internal
@@ -287,8 +305,8 @@
          	const csv = [
          	  header.join(','), // Tiêu đề 
          	  ...items.map(row => 
-			  header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(',') 
-			  )
+         header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(',') 
+         )
          	].join('\r\n');
          
          	//Tải file
