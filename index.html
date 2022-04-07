@@ -7,7 +7,7 @@
    <body>
       <div class="home__statistical-nav">
          <ul style="justify-content: flex-end;">
-            <li><a href="javascript:ReLoad_Data();" style="margin-right: 0">Làm mới dữ liệu</a></li>
+            <li><a class='a-hover' href="javascript:ReLoad_Data();" style="margin-right: 0">Làm mới dữ liệu</a></li>
          </ul>
       </div>
       <div class="home__statistical-nav">
@@ -20,8 +20,8 @@
             <div class="box-top">
                <div class="home__statistical-nav">
                   <ul style="justify-content: flex-start;">
-                     <li><a href="javascript:open('tabvi', 'vi');" id="tabvi" class="tablinks active">Việt Nam</a></li>
-                     <li><a href="javascript:open('taben', 'en');" id="taben" class="tablinks">Thế giới</a></li>
+                     <li><a href="javascript:open('tabvi', 'vi');" id="tabvi" class="a-hover tablinks active">Việt Nam</a></li>
+                     <li><a href="javascript:open('taben', 'en');" id="taben" class="a-hover tablinks">Thế giới</a></li>
                   </ul>
                </div>
                <div class="home__statistical-nav-content">
@@ -41,9 +41,9 @@
             <li><span>Tình hình dịch cả nước</span></li>
          </ul>
          <ul style="justify-content: flex-end;">
-            <li><button style='margin-right: 5px; background: white; border: 1px solid #2e3192; 
+            <li class="btn-hover" ><button class="btn-inner" style='margin-right: 5px; background: white; border: 1px solid #2e3192; 
                border-radius: 5px; height: 38px; margin-top: 8px; color: #2e3192' onclick="ExportCSV('Global')">Export CSV Global</button></li>
-            <li><button style='margin-right: 5px; background: white; border: 1px solid #2e3192; 
+            <li class="btn-hover" ><button class="btn-inner" style='margin-right: 5px; background: white; border: 1px solid #2e3192; 
                border-radius: 5px; height: 38px; margin-top: 8px; color: #2e3192' onclick="ExportCSV('VN')">Export CSV VN</button></li>
             <li><input class="input_sreach" type="text" placeholder='Nhập tên hoặc quy ước...' id="sreach_input"/></li>
          </ul>
@@ -314,7 +314,8 @@
             var blob = new Blob(["\ufeff", csv]);
             var url = window.URL.createObjectURL(blob);
             downloadLink.href = url;
-            downloadLink.download = str === 'VN' ? "Data_Covid_VN.csv": "Data_Covid_Global.csv";  // Tên file
+			let Now = new Date();
+            downloadLink.download = str === 'VN' ? "Data_Covid_VN_"+Now+".csv": "Data_Covid_Global_"+Now+".csv";  // Tên file
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
