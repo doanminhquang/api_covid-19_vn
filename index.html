@@ -314,8 +314,14 @@
             var blob = new Blob(["\ufeff", csv]);
             var url = window.URL.createObjectURL(blob);
             downloadLink.href = url;
-			let Now = new Date();
-            downloadLink.download = str === 'VN' ? "Data_Covid_VN_"+Now+".csv": "Data_Covid_Global_"+Now+".csv";  // Tên file
+			const today = new Date();
+			const yyyy = today.getFullYear();
+			let mm = today.getMonth() + 1; 
+			let dd = today.getDate();
+			if (dd < 10) dd = '0' + dd;
+			if (mm < 10) mm = '0' + mm;
+			const Time = dd + '/' + mm + '/' + yyyy+ '_'+today.getHours()+ ":"+today.getMinutes()+ ':'+today.getSeconds();
+			downloadLink.download = str === 'VN' ? "Data_Covid_VN_"+Time+".csv": "Data_Covid_Global_"+Time+".csv";  // Tên file
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
